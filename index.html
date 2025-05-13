@@ -1,0 +1,1280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>SB ENTERTAINMENT</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        /* Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        body {
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            color: white;
+            overflow-x: hidden;
+        }
+        .header {
+            display: flex;
+            flex-wrap: wrap; /* Allow wrapping to prevent overflow */
+            justify-content: flex-start; /* Align all items to the left */
+            align-items: center;
+            padding: 10px 15px;
+            background: linear-gradient(to bottom, rgba(15, 12, 41, 0.8), transparent);
+            position: sticky; /* Changed to sticky for better compatibility */
+            top: 0;
+            width: 100%;
+            z-index: 1000; /* High z-index to ensure visibility */
+            box-shadow: 0 4px 15px rgba(255, 0, 255, 0.5);
+        }
+        .header .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 24px;
+            color: #ffd700;
+            text-shadow: 0 0 15px #ffd700, 0 0 25px #ff00ff, 0 0 35px #00ffcc;
+            letter-spacing: 3px;
+            animation: glow 2s ease-in-out infinite alternate;
+            background: linear-gradient(90deg, #ff00ff, #00ffcc, #ffd700);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-right: 15px; /* Space between logo and icons */
+            white-space: nowrap;
+            display: inline-block;
+        }
+        @keyframes glow {
+            from { text-shadow: 0 0 10px #ffd700, 0 0 20px #ff00ff, 0 0 30px #00ffcc; }
+            to { text-shadow: 0 0 20px #ffd700, 0 0 30px #ff00ff, 0 0 40px #00ffcc; }
+        }
+        .header .icons {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            flex-shrink: 0;
+            min-width: 200px;
+            z-index: 1001; /* Ensure icons are above other elements */
+        }
+        .header .icons a {
+            color: #00ffcc !important;
+            text-decoration: none;
+            font-size: 14px;
+            display: inline-flex !important; /* Force display */
+            align-items: center;
+            gap: 5px;
+            transition: color 0.3s, transform 0.3s;
+            visibility: visible !important;
+            opacity: 1 !important;
+            white-space: nowrap;
+            background: none !important; /* Prevent any background overrides */
+            padding: 5px; /* Add padding for better visibility */
+        }
+        .header .icons a:hover {
+            color: #ff00ff !important;
+            transform: scale(1.1);
+        }
+        .slider {
+            margin-top: 0;
+            height: 200px;
+            width: 100%;
+            overflow: hidden;
+            position: relative;
+            border-bottom: 4px solid #ff00ff;
+            box-shadow: 0 4px 15px rgba(0, 255, 204, 0.5);
+            top: 0; /* Adjusted to avoid overlap */
+        }
+        .slider .slides {
+            display: flex;
+            width: 700%;
+            height: 100%;
+            animation: slide 21s infinite;
+        }
+        .slider .slide {
+            width: 100%;
+            height: 100%;
+        }
+        .slider .slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(0.8);
+        }
+        @keyframes slide {
+            0% { transform: translateX(0); }
+            12% { transform: translateX(0); }
+            16% { transform: translateX(-14.28%); }
+            28% { transform: translateX(-14.28%); }
+            32% { transform: translateX(-28.56%); }
+            44% { transform: translateX(-28.56%); }
+            48% { transform: translateX(-42.84%); }
+            60% { transform: translateX(-42.84%); }
+            64% { transform: translateX(-57.12%); }
+            76% { transform: translateX(-57.12%); }
+            80% { transform: translateX(-71.4%); }
+            92% { transform: translateX(-71.4%); }
+            100% { transform: translateX(-85.68%); }
+        }
+        .nav {
+            display: flex;
+            flex-wrap: nowrap;
+            gap: 8px;
+            padding: 8px;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: thin;
+            scrollbar-color: #ff00ff #1a1a2e;
+            margin-top: 200px; /* Adjusted to account for header */
+            width: 100%;
+        }
+        .nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+            padding: 5px 8px;
+            border-radius: 5px;
+            transition: background 0.3s, color 0.3s, transform 0.3s;
+            white-space: nowrap;
+        }
+        .nav a:hover {
+            background: #1a1a2e;
+            color: #ffd700;
+            transform: scale(1.1);
+        }
+        .content-section h3 {
+            font-size: 18px;
+            margin-bottom: 8px;
+            padding: 0 8px;
+            color: #ffd700;
+            text-shadow: 0 0 5px #ff00ff;
+        }
+        .content-row {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding-bottom: 8px;
+            padding-left: 8px;
+        }
+        .content-item {
+            position: relative;
+            min-width: 100px;
+            height: 140px;
+            background-color: #333;
+            border-radius: 5px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 0 10px rgba(0, 255, 204, 0.5);
+        }
+        .content-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .content-item:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 20px rgba(255, 0, 255, 0.8);
+        }
+        .content-item .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.3s;
+        }
+        .content-item:hover .overlay {
+            opacity: 1;
+        }
+        .content-item .overlay p {
+            font-size: 10px;
+            color: #ffd700;
+            text-shadow: 0 0 5px #ff00ff;
+            text-align: center;
+        }
+        .content-item button {
+            font-size: 12px;
+            padding: 4px 8px;
+        }
+        .content-item p {
+            font-size: 10px;
+        }
+        .video-player-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+        }
+        .video-player-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 90%;
+            max-width: 600px;
+        }
+        .video-player-container video {
+            width: 100%;
+        }
+        .video-player-container button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #e50914;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        /* Admin Login CSS */
+        .login-container {
+            background: #1a1a2e;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(255, 0, 255, 0.5);
+            text-align: center;
+            width: 90%;
+            max-width: 300px;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: none;
+            z-index: 1000;
+        }
+        .login-container h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 20px;
+            color: #ffd700;
+            text-shadow: 0 0 10px #ff00ff;
+            margin-bottom: 15px;
+        }
+        .login-container input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            background: #333;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-size: 14px;
+        }
+        .login-container button {
+            background: linear-gradient(to right, #ff00ff, #00ffcc);
+            border: none;
+            padding: 8px 16px;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .error-message {
+            color: #ff5555;
+            margin-top: 8px;
+            font-size: 12px;
+            display: none;
+        }
+
+        /* Admin Panel CSS */
+        .admin-panel {
+            font-family: 'Roboto', sans-serif;
+            background-color: #141414;
+            color: #ffffff;
+            min-height: 100vh;
+            display: none;
+        }
+        .slide-container {
+            width: 100%;
+            min-height: 100vh;
+            margin: 0 auto;
+            padding: 15px;
+            overflow-y: auto;
+        }
+        .netflix-btn {
+            background-color: #e50914;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .netflix-btn:hover {
+            background-color: #f40612;
+        }
+        .netflix-card {
+            background-color: #1f1f1f;
+            border-radius: 4px;
+            padding: 8px;
+            margin-bottom: 8px;
+            font-size: 12px;
+        }
+        .sidebar-item {
+            padding: 8px 12px;
+            border-radius: 4px;
+            margin-bottom: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .sidebar-item:hover, .sidebar-item.active {
+            background-color: #292929;
+        }
+        .upload-form input, .upload-form select, .upload-form textarea {
+            width: 100%;
+            padding: 6px;
+            margin-bottom: 8px;
+            background: #333;
+            border: none;
+            border-radius: 4px;
+            color: white;
+            font-size: 14px;
+        }
+        .sb-entertainment {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            background: linear-gradient(90deg, #e50914, #ff5555);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .netflix-gradient {
+            background: linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, rgba(20,20,20,1) 100%);
+        }
+
+        /* Bottom Navigation Bar */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(15, 12, 41, 0.9);
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            box-shadow: 0 -2px 10px rgba(255, 0, 255, 0.5);
+            z-index: 1000;
+        }
+        .nav-btn {
+            background: none;
+            border: none;
+            color: #00ffcc;
+            font-size: 14px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            transition: color 0.3s;
+        }
+        .nav-btn i {
+            font-size: 18px;
+        }
+        .nav-btn:hover {
+            color: #ff00ff;
+        }
+
+        /* Adjust user panel padding to avoid overlap */
+        #user-panel {
+            padding-bottom: 60px;
+        }
+
+        /* Responsive Design for Mobile */
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: row;
+                flex-wrap: wrap;
+                padding: 8px 10px;
+                align-items: center;
+                z-index: 1000;
+            }
+            .header .logo {
+                font-size: 20px;
+                letter-spacing: 2px;
+                margin-right: 10px;
+                white-space: nowrap;
+            }
+            .header .icons {
+                gap: 10px;
+                flex-shrink: 0;
+                min-width: 150px;
+                z-index: 1001;
+            }
+            .header .icons a {
+                font-size: 12px;
+                visibility: visible !important;
+                opacity: 1 !important;
+                display: inline-flex !important;
+                white-space: nowrap;
+                padding: 5px;
+            }
+            .slider {
+                height: 150px;
+                width: 100%;
+            }
+            .slider .slides {
+                height: 100%;
+            }
+            .slider .slide {
+                width: 100%;
+                height: 100%;
+            }
+            .slider .slide img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+            .nav {
+                margin-top: 150px;
+                padding: 5px;
+                gap: 4px;
+                background: rgba(15, 12, 41, 0.8);
+                border-bottom: 2px solid #ff00ff;
+                width: 100%;
+            }
+            .nav a {
+                font-size: 11px;
+                padding: 3px 6px;
+                border-radius: 3px;
+                background: rgba(255, 255, 255, 0.1);
+                transition: background 0.3s, color 0.3s;
+            }
+            .nav a:hover {
+                background: #ffd700;
+                color: #0f0c29;
+                transform: none;
+            }
+            .nav::-webkit-scrollbar {
+                height: 6px;
+            }
+            .nav::-webkit-scrollbar-thumb {
+                background: #ff00ff;
+                border-radius: 3px;
+            }
+            .nav::-webkit-scrollbar-track {
+                background: #1a1a2e;
+            }
+            .content-section h3 {
+                font-size: 16px;
+                padding: 0 5px;
+            }
+            .content-row {
+                gap: 5px;
+                padding-left: 5px;
+            }
+            .content-item {
+                min-width: 90px;
+                height: 120px;
+            }
+            .content-item .overlay p {
+                font-size: 8px;
+            }
+            .content-item button {
+                font-size: 10px;
+                padding: 3px 6px;
+            }
+            .content-item p {
+                font-size: 8px;
+            }
+            .video-player-container {
+                width: 95%;
+                max-width: 400px;
+            }
+            .login-container {
+                padding: 15px;
+                max-width: 280px;
+            }
+            .login-container h2 {
+                font-size: 18px;
+            }
+            .login-container input, .login-container button {
+                font-size: 12px;
+            }
+            .sb-entertainment {
+                font-size: 1.5rem;
+            }
+            .slide-container {
+                padding: 10px;
+            }
+            .netflix-btn {
+                padding: 5px 10px;
+                font-size: 12px;
+            }
+            .netflix-card {
+                padding: 6px;
+                font-size: 10px;
+            }
+            .sidebar-item {
+                padding: 6px 10px;
+                font-size: 12px;
+            }
+            .upload-form input, .upload-form select, .upload-form textarea {
+                padding: 5px;
+                font-size: 12px;
+            }
+            .bottom-nav {
+                padding: 8px 0;
+            }
+            .nav-btn {
+                font-size: 12px;
+            }
+            .nav-btn i {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- User Panel -->
+    <div id="user-panel">
+        <div class="header">
+            <div class="logo">WELCOME TO SB ENTERTAINMENT</div>
+            <div class="icons">
+                <a href="#" onclick="showNotification()" id="notification-button">Notification</a>
+                <a href="#" onclick="showDownload()" id="download-button">Download</a>
+                <a href="#" onclick="showAdminLogin()" id="admin-button">Admin</a>
+            </div>
+        </div>
+        <div class="slider">
+            <div class="slides" id="banner-slides">
+                <!-- Dynamically populated -->
+            </div>
+        </div>
+        <div class="nav" id="category-nav">
+            <!-- Dynamically populated -->
+        </div>
+        <div class="content-section" id="movies-section">
+            <h3 id="current-category">Movies</h3>
+            <div class="content-row" id="movies-carousel">
+                <!-- Dynamically populated -->
+            </div>
+        </div>
+        <div class="video-player-modal" id="video-player-modal">
+            <div class="video-player-container">
+                <video id="video-player" controls>
+                    <source id="video-source" src="" type="video/mp4">
+                </video>
+                <button onclick="closePlayer()">Close</button>
+            </div>
+        </div>
+        <!-- Bottom Navigation Bar -->
+        <div class="bottom-nav">
+            <button onclick="goToHome()" class="nav-btn">
+                <i class="fas fa-home"></i> Home
+            </button>
+            <button onclick="goToSearch()" class="nav-btn">
+                <i class="fas fa-search"></i> Search
+            </button>
+            <button onclick="goToSettings()" class="nav-btn">
+                <i class="fas fa-cog"></i> Settings
+            </button>
+        </div>
+    </div>
+
+    <!-- Admin Login -->
+    <div class="login-container" id="admin-login">
+        <h2>Admin Login</h2>
+        <form id="admin-login-form">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="Enter email" required>
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" placeholder="Enter password" required>
+            <button type="submit">Login</button>
+            <div id="login-error" class="error-message"></div>
+        </form>
+        <div class="back-button" onclick="showUserPanel()">Back</div>
+    </div>
+
+    <!-- Admin Panel -->
+    <div class="admin-panel" id="admin-panel">
+        <div class="slide-container netflix-gradient">
+            <h1 class="sb-entertainment">SB ENTERTAINMENT Admin</h1>
+            <div class="sidebar">
+                <div class="sidebar-item" onclick="showSection('dashboard')">Dashboard</div>
+                <div class="sidebar-item" onclick="showSection('content')">Content Management</div>
+                <div class="sidebar-item" onclick="showSection('banner')">Banner Management</div>
+                <div class="sidebar-item" onclick="showSection('users')">User Management</div>
+                <div class="sidebar-item" onclick="showSection('monetization')">Monetization</div>
+                <div class="sidebar-item" onclick="showSection('analytics')">Analytics</div>
+                <div class="sidebar-item" onclick="showSection('notifications')">Notifications</div>
+                <div class="sidebar-item" onclick="showSection('settings')">Settings</div>
+                <div class="sidebar-item" onclick="logout()">Logout</div>
+            </div>
+
+            <!-- Dashboard -->
+            <div id="dashboard-section">
+                <h2>Dashboard</h2>
+                <div class="chart-container">
+                    <canvas id="userActivityChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Content Management -->
+            <div id="content-section" style="display: none;">
+                <h2>Content Management</h2>
+                <div class="upload-form">
+                    <h3>Upload Content</h3>
+                    <form id="content-upload-form">
+                        <label for="content-title">Title</label>
+                        <input type="text" id="content-title" name="title" placeholder="Enter movie title (e.g., Movie 3)" required>
+                        <label for="content-category">Category</label>
+                        <select id="content-category" name="category" required>
+                            <option value="Action (एक्शन)">Action (एक्शन)</option>
+                            <option value="Comedy (कॉमेडी)">Comedy (कॉमेडी)</option>
+                            <option value="Romance (रोमांस)">Romance (रोमांस)</option>
+                            <option value="Thriller (थ्रिलर)">Thriller (थ्रिलर)</option>
+                            <option value="Horror (हॉरर)">Horror (हॉरर)</option>
+                            <option value="Drama (ड्रामा)">Drama (ड्रामा)</option>
+                            <option value="Adventure (एडवेंचर)">Adventure (एडवेंचर)</option>
+                            <option value="Mystery (मिस्ट्री)">Mystery (मिस्ट्री)</option>
+                            <option value="Sci-Fi (साइंस फिक्शन)">Sci-Fi (साइंस फिक्शन)</option>
+                            <option value="Fantasy (फैंटेसी)">Fantasy (फैंटेसी)</option>
+                            <option value="Crime (अपराध)">Crime (अपराध)</option>
+                            <option value="Erotic (एडल्ट/इरोटिक)">Erotic (एडल्ट/इरोटिक)</option>
+                            <option value="Hindi">Hindi</option>
+                            <option value="Tamil">Tamil</option>
+                            <option value="Telugu">Telugu</option>
+                            <option value="Malayalam">Malayalam</option>
+                            <option value="Kannada">Kannada</option>
+                            <option value="Bengali">Bengali</option>
+                            <option value="Marathi">Marathi</option>
+                            <option value="Gujarati">Gujarati</option>
+                            <option value="Punjabi">Punjabi</option>
+                            <option value="English (Hollywood)">English (Hollywood)</option>
+                            <option value="Korean (K-Drama)">Korean (K-Drama)</option>
+                            <option value="Turkish">Turkish</option>
+                            <option value="Japanese (Anime)">Japanese (Anime)</option>
+                            <option value="Latest / New Releases (नई रिलीज़)">Latest / New Releases (नई रिलीज़)</option>
+                            <option value="Trending / Popular (लोकप्रिय)">Trending / Popular (लोकप्रिय)</option>
+                            <option value="Web Series">Web Series</option>
+                            <option value="Movies">Movies</option>
+                            <option value="Short Films">Short Films</option>
+                            <option value="18+ / Adult">18+ / Adult</option>
+                            <option value="Dubbed Movies">Dubbed Movies</option>
+                            <option value="Dual Audio">Dual Audio</option>
+                            <option value="ULLU Style">ULLU Style</option>
+                            <option value="Local/Desi Shows">Local/Desi Shows</option>
+                            <option value="Family Safe">Family Safe</option>
+                            <option value="Documentary">Documentary</option>
+                            <option value="Kids / Animation">Kids / Animation</option>
+                        </select>
+                        <label for="internxt-link">Internxt Video Link</label>
+                        <input type="text" id="internxt-link" name="internxtLink" placeholder="Enter Internxt video link" required>
+                        <label for="internxt-password">Internxt Password</label>
+                        <input type="text" id="internxt-password" name="internxtPassword" placeholder="Enter password (e.g., myapp123)" required>
+                        <label for="content-thumbnail">Thumbnail URL</label>
+                        <input type="text" id="content-thumbnail" name="thumbnail" placeholder="Enter thumbnail URL">
+                        <label for="thumbnail-file">Or Upload Thumbnail</label>
+                        <input type="file" id="thumbnail-file" name="thumbnailFile" accept="image/*">
+                        <button type="submit" class="netflix-btn">Upload</button>
+                    </form>
+                    <div id="upload-error" class="error-message"></div>
+                </div>
+                <div class="content-list" id="content-list">
+                    <!-- Dynamically populated -->
+                </div>
+            </div>
+
+            <!-- Banner Management -->
+            <div id="banner-section" style="display: none;">
+                <h2>Banner Management</h2>
+                <div class="upload-form">
+                    <h3>Upload Banner</h3>
+                    <form id="banner-upload-form">
+                        <label for="banner-url">Banner Image URL</label>
+                        <input type="text" id="banner-url" name="bannerUrl" placeholder="Enter banner image URL" required>
+                        <label for="banner-alt">Banner Alt Text</label>
+                        <input type="text" id="banner-alt" name="bannerAlt" placeholder="Enter alt text (e.g., Movie Name)" required>
+                        <button type="submit" class="netflix-btn">Upload Banner</button>
+                    </form>
+                </div>
+                <div class="content-list" id="banner-list">
+                    <!-- Dynamically populated -->
+                </div>
+            </div>
+
+            <!-- User Management -->
+            <div id="users-section" style="display: none;">
+                <h2>User Management</h2>
+                <table id="user-table">
+                    <tr><th>Name</th><th>Email</th><th>Subscription</th><th>Actions</th></tr>
+                </table>
+            </div>
+
+            <!-- Monetization -->
+            <div id="monetization-section" style="display: none;">
+                <h2>Monetization</h2>
+                <form id="plan-form">
+                    <label for="plan-name">Plan Name</label>
+                    <input type="text" id="plan-name" name="planName" required>
+                    <label for="plan-price">Price</label>
+                    <input type="number" id="plan-price" name="price" required>
+                    <button type="submit" class="netflix-btn">Add Plan</button>
+                </form>
+                <div id="plan-list"></div>
+            </div>
+
+            <!-- Analytics -->
+            <div id="analytics-section" style="display: none;">
+                <h2>Analytics</h2>
+                <div class="chart-container">
+                    <canvas id="contentPerformanceChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Notifications -->
+            <div id="notifications-section" style="display: none;">
+                <h2>Notifications</h2>
+                <form id="notification-form">
+                    <label for="notification-message">Message</label>
+                    <textarea id="notification-message" name="message" required></textarea>
+                    <button type="submit" class="netflix-btn">Send Notification</button>
+                </form>
+            </div>
+
+            <!-- Settings -->
+            <div id="settings-section" style="display: none;">
+                <h2>Settings</h2>
+                <div class="settings-option">App Language</div>
+                <div class="settings-option">Server Settings</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Mock Backend Data
+        const mockData = {
+            contents: [
+                { _id: "1", title: "Test Movie", category: "Action (एक्शन)", internxtLink: "https://example.com/video.mp4", internxtPassword: "myapp123", thumbnail: "https://via.placeholder.com/150" }
+            ],
+            banners: [
+                { _id: "1", bannerUrl: "https://www.themoviedb.org/t/p/w200/qNBAXBIQlnOThrVvA6mA2B5ggV6.jpg", bannerAlt: "Oppenheimer" },
+                { _id: "2", bannerUrl: "https://www.themoviedb.org/t/p/w200/iuFNMS8U5cb6xfzi51Dbkovj7vM.jpg", bannerAlt: "Barbie" },
+                { _id: "3", bannerUrl: "https://www.themoviedb.org/t/p/w200/5a4JdoFwll5hfKqjCpIHOzibbsS.jpg", bannerAlt: "Mission: Impossible" },
+                { _id: "4", bannerUrl: "https://www.themoviedb.org/t/p/w200/1g0dhYtq4irTY1GPXviftl1DXLY.jpg", bannerAlt: "Spider-Man: Across the Spider-Verse" },
+                { _id: "5", bannerUrl: "https://www.themoviedb.org/t/p/w200/qhb1qOilapbapxWQn9jtRCMwXJF.jpg", bannerAlt: "The Super Mario Bros. Movie" },
+                { _id: "6", bannerUrl: "https://www.themoviedb.org/t/p/w200/628Dep6AxEtDxjZoGP78TsOxYbK.jpg", bannerAlt: "Guardians of the Galaxy Vol. 3" },
+                { _id: "7", bannerUrl: "https://www.themoviedb.org/t/p/w200/7WsyChQLEftFiDOVTGkv3hFpyD.jpg", bannerAlt: "Samay" }
+            ],
+            users: [
+                { _id: "1", name: "User1", email: "user1@example.com", subscription: "Free" }
+            ],
+            plans: [],
+            notifications: []
+        };
+
+        // Initialize Local Storage
+        if (!localStorage.getItem('contents')) {
+            localStorage.setItem('contents', JSON.stringify(mockData.contents));
+        }
+        if (!localStorage.getItem('banners')) {
+            localStorage.setItem('banners', JSON.stringify(mockData.banners));
+        }
+        if (!localStorage.getItem('users')) {
+            localStorage.setItem('users', JSON.stringify(mockData.users));
+        }
+        if (!localStorage.getItem('plans')) {
+            localStorage.setItem('plans', JSON.stringify(mockData.plans));
+        }
+        if (!localStorage.getItem('notifications')) {
+            localStorage.setItem('notifications', JSON.stringify(mockData.notifications));
+        }
+
+        // Categories
+        const allCategories = [
+            "Action (एक्शन)", "Comedy (कॉमेडी)", "Romance (रोमांस)", "Thriller (थ्रिलर)", 
+            "Horror (हॉरर)", "Drama (ड्रामा)", "Adventure (एडवेंचर)", "Mystery (मिस्ट्री)", 
+            "Sci-Fi (साइंस फिक्शन)", "Fantasy (फैंटेसी)", "Crime (अपराध)", "Erotic (एडल्ट/इरोटिक)",
+            "Hindi", "Tamil", "Telugu", "Malayalam", "Kannada", "Bengali", 
+            "Marathi", "Gujarati", "Punjabi", "English (Hollywood)", 
+            "Korean (K-Drama)", "Turkish", "Japanese (Anime)",
+            "Latest / New Releases (नई रिलीज़)", "Trending / Popular (लोकप्रिय)", 
+            "Web Series", "Movies", "Short Films", "18+ / Adult", 
+            "Dubbed Movies", "Dual Audio", "ULLU Style", "Local/Desi Shows", 
+            "Family Safe", "Documentary", "Kids / Animation"
+        ];
+
+        // Navigation Functions
+        function showUserPanel() {
+            console.log("Showing user panel");
+            document.getElementById('user-panel').style.display = 'block';
+            document.getElementById('admin-login').style.display = 'none';
+            document.getElementById('admin-panel').style.display = 'none';
+            loadBanners();
+            loadCategories();
+            loadMovies();
+        }
+
+        function showAdminLogin() {
+            console.log("Admin button clicked, showing admin login");
+            document.getElementById('user-panel').style.display = 'none';
+            document.getElementById('admin-login').style.display = 'block';
+            document.getElementById('admin-panel').style.display = 'none';
+            document.getElementById('login-error').style.display = 'none';
+        }
+
+        function showAdminPanel() {
+            console.log("Showing admin panel");
+            document.getElementById('user-panel').style.display = 'none';
+            document.getElementById('admin-login').style.display = 'none';
+            document.getElementById('admin-panel').style.display = 'block';
+            loadContentList();
+            loadBannerList();
+            showSection('dashboard');
+        }
+
+        function showNotification() {
+            console.log("Notification button clicked");
+            alert("No new notifications.");
+        }
+
+        function showDownload() {
+            console.log("Download button clicked");
+            alert("Download feature coming soon!");
+        }
+
+        function showSettings() {
+            console.log("Settings button clicked");
+            alert("Settings feature coming soon!");
+        }
+
+        // Navigation Functions for Bottom Nav
+        function goToHome() {
+            loadMovies();
+            document.getElementById('current-category').innerText = 'All Movies';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function goToSearch() {
+            alert("Search feature coming soon!");
+        }
+
+        function goToSettings() {
+            alert("Settings feature coming soon!");
+        }
+
+        // Admin Login
+        document.getElementById('admin-login-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value.trim();
+            if (email === "sakibmom07@gmail.com" && password === "sakib@098098098") {
+                showAdminPanel();
+            } else {
+                document.getElementById('login-error').style.display = 'block';
+                document.getElementById('login-error').innerText = "Invalid email or password!";
+            }
+        });
+
+        // Load Banners in Slider
+        function loadBanners() {
+            const bannerSlides = document.getElementById('banner-slides');
+            bannerSlides.innerHTML = '';
+            const banners = JSON.parse(localStorage.getItem('banners')) || [];
+            banners.forEach(banner => {
+                const slide = document.createElement('div');
+                slide.className = 'slide';
+                slide.innerHTML = `<img src="${banner.bannerUrl}" alt="${banner.bannerAlt}" loading="lazy">`;
+                bannerSlides.appendChild(slide);
+            });
+            const slideCount = banners.length;
+            bannerSlides.style.width = `${slideCount * 100}%`;
+            const keyframePercentages = calculateSlideKeyframes(slideCount);
+            updateSlideAnimation(slideCount, keyframePercentages);
+        }
+
+        // Calculate Keyframes for Slider Animation
+        function calculateSlideKeyframes(slideCount) {
+            const percentages = [];
+            const interval = 100 / (slideCount - 1);
+            for (let i = 0; i < slideCount; i++) {
+                percentages.push(i * interval);
+            }
+            return percentages;
+        }
+
+        // Update Slide Animation CSS
+        function updateSlideAnimation(slideCount, percentages) {
+            let keyframes = '@keyframes slide {';
+            const timePerSlide = 12 / slideCount;
+            for (let i = 0; i < slideCount; i++) {
+                const startPercent = (i * timePerSlide * 100) / 12;
+                const endPercent = ((i + 1) * timePerSlide * 100) / 12;
+                const translatePercent = i === 0 ? 0 : percentages[i];
+                keyframes += `${startPercent}% { transform: translateX(-${translatePercent}%); }`;
+                if (i < slideCount - 1) {
+                    keyframes += `${endPercent - 0.01}% { transform: translateX(-${translatePercent}%); }`;
+                }
+            }
+            keyframes += `100% { transform: translateX(-${percentages[slideCount - 1]}%); }`;
+            keyframes += '}';
+            const styleSheet = document.styleSheets[0];
+            styleSheet.insertRule(keyframes, styleSheet.cssRules.length);
+        }
+
+        // Load Categories in Navigation
+        function loadCategories() {
+            const categoryNav = document.getElementById('category-nav');
+            categoryNav.innerHTML = '';
+            allCategories.forEach(category => {
+                const link = document.createElement('a');
+                link.href = '#';
+                link.innerText = category;
+                link.onclick = () => selectCategory(category);
+                categoryNav.appendChild(link);
+            });
+        }
+
+        // Load Movies in User Panel
+        function loadMovies(category = null) {
+            const moviesCarousel = document.getElementById('movies-carousel');
+            moviesCarousel.innerHTML = '';
+            const contents = JSON.parse(localStorage.getItem('contents')) || [];
+            let filteredContents = contents;
+            if (category) {
+                filteredContents = contents.filter(content => content.category === category);
+                document.getElementById('current-category').innerText = category;
+            } else {
+                document.getElementById('current-category').innerText = 'All Movies';
+            }
+            filteredContents.forEach(content => {
+                const contentItem = document.createElement('div');
+                contentItem.className = 'content-item';
+                contentItem.innerHTML = `
+                    <img src="${content.thumbnail}" alt="${content.title}" loading="lazy">
+                    <div class="overlay">
+                        <p>${content.title}</p>
+                    </div>
+                    <button class="netflix-btn" style="margin-top: 5px;" onclick="window.location.href='${content.internxtLink}'">Watch Now</button>
+                    <p style="font-size: 12px; color: #ffd700;">Password: ${content.internxtPassword}</p>
+                `;
+                moviesCarousel.appendChild(contentItem);
+            });
+        }
+
+        // Load Content List in Admin Panel
+        function loadContentList() {
+            const contentList = document.getElementById('content-list');
+            contentList.innerHTML = '';
+            const contents = JSON.parse(localStorage.getItem('contents')) || [];
+            contents.forEach(content => {
+                const contentItem = document.createElement('div');
+                contentItem.className = 'netflix-card';
+                contentItem.innerHTML = `
+                    <p>Title: ${content.title}</p>
+                    <p>Category: ${content.category}</p>
+                    <p>Internxt Link: ${content.internxtLink}</p>
+                    <p>Password: ${content.internxtPassword}</p>
+                    <p>Thumbnail: ${content.thumbnail}</p>
+                    <button class="netflix-btn" onclick="deleteContent('${content._id}')">Delete</button>
+                `;
+                contentList.appendChild(contentItem);
+            });
+        }
+
+        // Load Banner List in Admin Panel
+        function loadBannerList() {
+            const bannerList = document.getElementById('banner-list');
+            bannerList.innerHTML = '';
+            const banners = JSON.parse(localStorage.getItem('banners')) || [];
+            banners.forEach(banner => {
+                const bannerItem = document.createElement('div');
+                bannerItem.className = 'netflix-card';
+                bannerItem.innerHTML = `
+                    <p>Banner URL: ${banner.bannerUrl}</p>
+                    <p>Alt Text: ${banner.bannerAlt}</p>
+                    <button class="netflix-btn" onclick="deleteBanner('${banner._id}')">Delete</button>
+                `;
+                bannerList.appendChild(bannerItem);
+            });
+        }
+
+        // Upload Content
+        document.getElementById('content-upload-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const title = document.getElementById('content-title').value;
+            const category = document.getElementById('content-category').value;
+            const internxtLink = document.getElementById('internxt-link').value;
+            const internxtPassword = document.getElementById('internxt-password').value;
+            const thumbnailUrl = document.getElementById('content-thumbnail').value;
+            const thumbnailFile = document.getElementById('thumbnail-file').files[0];
+
+            let thumbnail = thumbnailUrl;
+            if (thumbnailFile) {
+                const reader = new FileReader();
+                reader.onload = function (event) {
+                    thumbnail = event.target.result;
+                    saveContent(title, category, internxtLink, internxtPassword, thumbnail);
+                };
+                reader.readAsDataURL(thumbnailFile);
+            } else if (thumbnailUrl) {
+                saveContent(title, category, internxtLink, internxtPassword, thumbnail);
+            } else {
+                document.getElementById('upload-error').style.display = 'block';
+                document.getElementById('upload-error').innerText = "Please provide a thumbnail URL or upload a file!";
+                return;
+            }
+        });
+
+        function saveContent(title, category, internxtLink, internxtPassword, thumbnail) {
+            const newContent = {
+                _id: Date.now().toString(),
+                title,
+                category,
+                internxtLink,
+                internxtPassword,
+                thumbnail
+            };
+
+            const contents = JSON.parse(localStorage.getItem('contents')) || [];
+            contents.push(newContent);
+            localStorage.setItem('contents', JSON.stringify(contents));
+
+            loadContentList();
+            alert('Content uploaded successfully!');
+            document.getElementById('content-upload-form').reset();
+        }
+
+        // Upload Banner
+        document.getElementById('banner-upload-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const bannerUrl = document.getElementById('banner-url').value;
+            const bannerAlt = document.getElementById('banner-alt').value;
+
+            const newBanner = {
+                _id: Date.now().toString(),
+                bannerUrl,
+                bannerAlt
+            };
+
+            const banners = JSON.parse(localStorage.getItem('banners')) || [];
+            banners.push(newBanner);
+            localStorage.setItem('banners', JSON.stringify(banners));
+
+            loadBannerList();
+            loadBanners();
+            alert('Banner uploaded successfully!');
+            document.getElementById('banner-upload-form').reset();
+        });
+
+        // Delete Content
+        function deleteContent(id) {
+            let contents = JSON.parse(localStorage.getItem('contents')) || [];
+            contents = contents.filter(content => content._id !== id);
+            localStorage.setItem('contents', JSON.stringify(contents));
+            loadContentList();
+            loadMovies();
+        }
+
+        // Delete Banner
+        function deleteBanner(id) {
+            let banners = JSON.parse(localStorage.getItem('banners')) || [];
+            banners = banners.filter(banner => banner._id !== id);
+            localStorage.setItem('banners', JSON.stringify(banners));
+            loadBannerList();
+            loadBanners();
+        }
+
+        // Show Admin Sections
+        function showSection(section) {
+            const sections = ['dashboard', 'content', 'banner', 'users', 'monetization', 'analytics', 'notifications', 'settings'];
+            sections.forEach(s => {
+                document.getElementById(`${s}-section`).style.display = s === section ? 'block' : 'none';
+                const sidebarItem = document.querySelector(`.sidebar-item[onclick="showSection('${s}')"]`);
+                if (s === section) {
+                    sidebarItem.classList.add('active');
+                } else {
+                    sidebarItem.classList.remove('active');
+                }
+            });
+        }
+
+        // Load Users
+        function loadUsers() {
+            const userTable = document.getElementById('user-table');
+            userTable.innerHTML = '<tr><th>Name</th><th>Email</th><th>Subscription</th><th>Actions</th></tr>';
+            const users = JSON.parse(localStorage.getItem('users')) || [];
+            users.forEach(user => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${user.name}</td>
+                    <td>${user.email}</td>
+                    <td>${user.subscription}</td>
+                    <td><button class="netflix-btn" onclick="deleteUser('${user._id}')">Delete</button></td>
+                `;
+                userTable.appendChild(row);
+            });
+        }
+
+        // Delete User
+        function deleteUser(id) {
+            let users = JSON.parse(localStorage.getItem('users')) || [];
+            users = users.filter(user => user._id !== id);
+            localStorage.setItem('users', JSON.stringify(users));
+            loadUsers();
+        }
+
+        // Add Plan
+        document.getElementById('plan-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const planName = document.getElementById('plan-name').value;
+            const price = document.getElementById('plan-price').value;
+            const newPlan = { _id: Date.now().toString(), planName, price };
+            const plans = JSON.parse(localStorage.getItem('plans')) || [];
+            plans.push(newPlan);
+            localStorage.setItem('plans', JSON.stringify(plans));
+            loadPlans();
+            document.getElementById('plan-form').reset();
+        });
+
+        // Load Plans
+        function loadPlans() {
+            const planList = document.getElementById('plan-list');
+            planList.innerHTML = '';
+            const plans = JSON.parse(localStorage.getItem('plans')) || [];
+            plans.forEach(plan => {
+                const planItem = document.createElement('div');
+                planItem.className = 'netflix-card';
+                planItem.innerHTML = `
+                    <p>Plan: ${plan.planName}</p>
+                    <p>Price: $${plan.price}</p>
+                    <button class="netflix-btn" onclick="deletePlan('${plan._id}')">Delete</button>
+                `;
+                planList.appendChild(planItem);
+            });
+        }
+
+        // Delete Plan
+        function deletePlan(id) {
+            let plans = JSON.parse(localStorage.getItem('plans')) || [];
+            plans = plans.filter(plan => plan._id !== id);
+            localStorage.setItem('plans', JSON.stringify(plans));
+            loadPlans();
+        }
+
+        // Send Notification
+        document.getElementById('notification-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const message = document.getElementById('notification-message').value;
+            const notifications = JSON.parse(localStorage.getItem('notifications')) || [];
+            notifications.push({ _id: Date.now().toString(), message });
+            localStorage.setItem('notifications', JSON.stringify(notifications));
+            document.getElementById('notification-form').reset();
+            alert('Notification sent!');
+        });
+
+        // Chart.js Setup
+        function setupCharts() {
+            new Chart(document.getElementById('userActivityChart'), {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
+                    datasets: [{
+                        label: 'User Activity',
+                        data: [10, 20, 30, 40, 50],
+                        borderColor: '#e50914',
+                        fill: false
+                    }]
+                }
+            });
+
+            new Chart(document.getElementById('contentPerformanceChart'), {
+                type: 'bar',
+                data: {
+                    labels: ['Content 1', 'Content 2', 'Content 3'],
+                    datasets: [{
+                        label: 'Views',
+                        data: [100, 200, 150],
+                        backgroundColor: '#e50914'
+                    }]
+                }
+            });
+        }
+
+        // Video Player Functions
+        function playVideo(link) {
+            const modal = document.getElementById('video-player-modal');
+            const videoSource = document.getElementById('video-source');
+            videoSource.src = link;
+            document.getElementById('video-player').load();
+            modal.style.display = 'block';
+        }
+
+        function closePlayer() {
+            const modal = document.getElementById('video-player-modal');
+            document.getElementById('video-player').pause();
+            modal.style.display = 'none';
+        }
+
+        // Select Category
+        function selectCategory(category) {
+            loadMovies(category);
+        }
+
+        // Logout
+        function logout() {
+            showUserPanel();
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function () {
+            console.log("App loaded, initializing user panel");
+            showUserPanel();
+            loadUsers();
+            loadPlans();
+            setupCharts();
+
+            // Ensure buttons are visible
+            const buttons = [
+                { id: 'notification-button', name: 'Notification' },
+                { id: 'download-button', name: 'Download' },
+                { id: 'admin-button', name: 'Admin' }
+            ];
+
+            buttons.forEach(button => {
+                const element = document.getElementById(button.id);
+                if (element) {
+                    console.log(`${button.name} button found in DOM`);
+                    element.style.display = 'inline-flex';
+                    element.style.visibility = 'visible';
+                    element.style.opacity = '1';
+                    // Log computed styles for debugging
+                    const computedStyle = window.getComputedStyle(element);
+                    console.log(`${button.name} button computed styles: display=${computedStyle.display}, visibility=${computedStyle.visibility}, opacity=${computedStyle.opacity}`);
+                } else {
+                    console.log(`${button.name} button not found in DOM`);
+                }
+            });
+        });
+
+        // Fallback to ensure buttons are visible after a short delay
+        setTimeout(() => {
+            const buttons = [
+                { id: 'notification-button', name: 'Notification' },
+                { id: 'download-button', name: 'Download' },
+                { id: 'admin-button', name: 'Admin' }
+            ];
+
+            buttons.forEach(button => {
+                const element = document.getElementById(button.id);
+                if (element) {
+                    console.log(`Fallback: Ensuring ${button.name} button is visible`);
+                    element.style.display = 'inline-flex';
+                    element.style.visibility = 'visible';
+                    element.style.opacity = '1';
+                }
+            });
+        }, 1000);
+    </script>
+</body>
+</html>
